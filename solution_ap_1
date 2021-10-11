@@ -1,0 +1,503 @@
+package ap_assignment;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.*;
+
+class AddV{
+    private String name;
+    private int dose;
+    private int gap;
+    AddV(String name,int dose,int gap){
+        this.name = name;
+        this.dose = dose;
+        this.gap = gap;
+    }
+    AddV(String name,int dose){
+        this.name = name;
+        this.dose = dose;
+    }
+    public String getName(){
+        return this.name;
+    }
+    public int getDose(){
+        return this.dose;
+    }
+    public int getGap(){
+        return this.gap;
+    }
+}
+class reghos{
+    private String name;
+    private int pin;
+    private String hospiatalid;
+    reghos(String name,int pin,String hospiatalid){
+        this.name = name;
+        this.pin = pin;
+        this.hospiatalid = hospiatalid;
+    }
+    public String getHospiatalid(){
+        return this.hospiatalid;
+    }
+//    static HashMap<String ,Integer> map_name_ID= new HashMap<>();
+//     public void idgen(){
+//        if(!map_name_ID.containsKey(name) ){
+//            map_name_ID.put(name,100000+map_name_ID.size());
+//        }
+//     }
+     public String getName(){
+         return this.name;
+     }
+     public int getPin(){
+         return this.pin;
+     }
+}
+class Regcitizen{
+    private String name;
+    private int age;
+    private String uniqueID;
+    private String currentstatus;
+    private int no_doses;
+    private int duedateford;
+    private String vaccinef;
+    private int rem;
+    Regcitizen(String name,int age,String uniqueID){
+        this.name = name;
+        this.age = age;
+        this.uniqueID = uniqueID;
+        this.currentstatus = "Citizen REGISTERED";
+        this.duedateford = 1;
+
+    }
+    public void udstatus(int d,String vf,int total){
+        this.no_doses++;
+        this.duedateford+=d;
+        this.vaccinef = vf;
+        this.rem = total-this.no_doses;
+        if(this.rem!=0){
+            this.currentstatus = "PARTIALLY VACCINATED";
+        }else if(this.rem==0){
+            this.currentstatus = "FULLY VACCINATED";
+        }
+//        if(this.currentstatus.equals("REGISTERED")){
+//            this.currentstatus = "PARTIALLY VACCINATED";
+//        }else if(this.currentstatus.equals("PARTIALLY VACCINATED")){
+//            this.currentstatus = "FULLY VACCINATED";
+//        }
+    }
+    public String getName(){
+        return this.name;
+    }
+    public int getAge(){
+        return this.age;
+    }
+    public String getUniqueID(){
+        return this.uniqueID;
+    }
+    public String getCurrentstatus(){
+        return this.currentstatus;
+    }
+    public int getNo_doses(){
+        return this.no_doses;
+    }
+    public int getDuedateford(){
+        return this.duedateford;
+    }
+    public String getVaccinef(){
+        return this.vaccinef;
+    }
+}
+class addslot{
+    private String hosID;
+    private int slots;
+    private int daynumber;
+    private int EnterQuatity;
+    private String cvorcd;
+    addslot(String hosID,int slots,int daynumber,int EnterQuatity,String cvorcd){
+        this.hosID = hosID;
+        this.slots = slots;
+        this.daynumber = daynumber;
+        this.EnterQuatity = EnterQuatity;
+        this.cvorcd = cvorcd;
+    }
+    void decremental(){
+        this.EnterQuatity--;
+    }
+    public String getHosID(){
+        return this.hosID;
+    }
+    public int getSlots(){
+        return this.slots;
+    }
+    public int getDaynumber(){
+        return this.daynumber;
+    }
+    public int getEnterQuatity(){
+        return this.EnterQuatity;
+    }
+    public String getCvorcd(){
+        return this.cvorcd;
+    }
+}
+//class bookslot extends reghos{
+//
+//    bookslot(String name, int pin) {
+//        super(name, pin);
+//    }
+//}
+public class Ap_Assignment1 {
+
+//    static class Reader {
+//        static BufferedReader reader;
+//        static StringTokenizer tokenizer;
+//
+//        static void init(InputStream input) {
+//            reader = new BufferedReader(new InputStreamReader(input));
+//            tokenizer = new StringTokenizer("");
+//        }
+//
+//        static String next() throws IOException {
+//            while (!tokenizer.hasMoreTokens()) {
+//                //TODO add check for eof if necessary
+//                tokenizer = new StringTokenizer(
+//                        reader.readLine());
+//            }
+//            return tokenizer.nextToken();
+//        }
+//
+//        static int nextint() throws IOException {
+//            return Integer.parseInt(next());
+//        }
+//
+//        static long nextlong() throws IOException {
+//            return Long.parseLong(next());
+//        }
+//
+//        static double nextdouble() throws IOException {
+//            return Double.parseDouble(next());
+//        }
+//
+//    }
+    public static void main(String[] args) throws IOException {
+
+        int UNID = 100000;
+        //Reader.init(System.in);
+        Scanner sc = new Scanner(System.in);
+        System.out.println("CoWin Portal initialized....");
+        System.out.println();
+
+        System.out.println("Enter no. of queries you want to perform:");
+        int t = sc.nextInt();
+        HashMap<Integer, reghos> map_pin_name = new HashMap<>();
+        //ArrayList<reghos> addvaccine_hos = new ArrayList<>();
+        ArrayList<AddV> addv = new ArrayList<>();
+        ArrayList<reghos> ahos = new ArrayList<>();
+        ArrayList<addslot> asslot = new ArrayList<>();
+        ArrayList<Regcitizen> aregcity = new ArrayList<>();
+        while (t-- > 0) {
+            System.out.println("-".repeat(30));
+            System.out.println();
+            System.out.println("" +
+                    "1. Add Vaccine\n" +
+                    "2. Register Hospital\n" +
+                    "3. Register Citizen\n" +
+                    "4. Add Slot for Vaccination\n" +
+                    "5. Book Slot for Vaccination\n" +
+                    "6. List all slots for a hospital\n" +
+                    "7. Check Vaccination Status\n" +
+                    "8. Exit"
+            );
+            System.out.println();
+            System.out.println("-".repeat(30));
+            int n = sc.nextInt();
+            if (n == 1) {
+                System.out.println("Enter vaccine name:");
+                String name = sc.next();
+                System.out.println("Enter no. of doses:");
+                int dose = sc.nextInt();
+                if(dose==1){
+                    AddV a = new AddV(name, dose, 0);
+                    addv.add(a);
+                    System.out.println("Vaccine Name: " + a.getName() + ", " + "Number of Doses: " + a.getDose() + ", " + "Gap Between Doses:" + a.getGap());
+                }else {
+                    System.out.println("Enter gap between Doses:");
+                    int gap = sc.nextInt();
+                    AddV a = new AddV(name, dose, gap);
+                    addv.add(a);
+                    System.out.println("Vaccine Name: " + a.getName() + ", " + "Number of Doses: " + a.getDose() + ", " + "Gap Between Doses:" + a.getGap());
+                }
+//                if (dose == 2) {//dose doubt!
+//                    System.out.println("Enter gap between Doses:");
+//                    int gap = Reader.nextint();
+//                    AddV a = new AddV(name, dose, gap);
+//                    addv.add(a);
+//                    System.out.println("Vaccine Name: " + a.getName() + ", " + "Number of Doses: " + a.getDose() + ", " + "Gap Between Doses:" + a.getGap());
+//                } else if (dose == 1) {
+//                    AddV a = new AddV(name, dose);
+//                    addv.add(a);
+//                    System.out.println("Vaccine Name: " + a.getName() + ", " + "Number of Doses: " + a.getDose() + ", " + "Gap Between Doses:" + 0);
+//                } else {
+//                    System.out.println("Please Enter valid no. of doses!");
+//                }
+            } else if (n == 2) {
+                UNID++;
+                System.out.println("Enter Hospital Name:");
+                String str = sc.next();
+                System.out.println("Enter your PinCode:");
+                String p = sc.next();
+                if (p.length() != 6) {
+                    System.out.println("Invalid PinCode!");
+                }
+                if (p.length() > 6) {
+                    while (true) {
+                        String pp = sc.nextLine();
+                        if (pp.length() == 6) {
+                            p = pp;
+                            break;
+                        }
+                        System.out.println("Please Enter valid PinCode!");
+                    }
+                }
+                reghos rh = new reghos(str, Integer.parseInt(p),String.valueOf(UNID));
+                map_pin_name.put(UNID, rh);
+                ahos.add(rh);
+                //System.out.println(ahos.size()+"*");
+                System.out.print("Hospital Name: " + rh.getName() + ",PinCode: " + rh.getPin());
+                System.out.println(",Unique ID: " + UNID);
+            } else if (n == 3) {
+                System.out.println("Please Enter your name:");
+                String str = sc.next();
+                System.out.println("Please Enter your age:");
+                int age = sc.nextInt();
+                System.out.println("Please Enter your Unique ID:");
+                String uid = sc.next();
+                if (uid.length() != 12) {
+                    System.out.println("Invalid UniqueId!");
+                }
+                for(int i  = 0;i<aregcity.size();i++){
+                    if(!aregcity.get(i).getUniqueID().equals(uid)){
+
+                    }
+                }
+                Regcitizen rc = new Regcitizen(str, age, uid);
+                System.out.println("Citizen Name: " + rc.getName() + ", Age: " + rc.getAge() + ", Unique ID: " + rc.getUniqueID());
+                if (age < 18) {
+                    System.out.println("Only above 18 are allowed");
+                } else {
+                    aregcity.add(rc);
+                }
+            } else if (n == 4) {
+                System.out.println("Enter Hospital ID:");
+                String str = sc.next();
+                System.out.println("Enter number of Slots to be added:");
+                int day = sc.nextInt();
+                int daystore = day;
+                while (day-- > 0) {
+                    System.out.println("Enter Day Number:");
+                    int no_day = sc.nextInt();
+                    System.out.println("Enter Quantity:");
+                    int no_quantity = sc.nextInt();
+                    System.out.println("Select Vaccine:");
+                    int pc = 0;
+                    for (int i = 0; i < addv.size(); i++) {
+                        System.out.println(i + "." + addv.get(i).getName());
+                        //pc++;
+                        //arrstr.add("Slot added by Hospital " + slot.hosID + " for Day: " + no_day + ", Available Quantity: " + no_quantity + " of Vaccine"+a.getName());
+                    }
+                    int idx = sc.nextInt();
+                    addslot slot = new addslot(str, daystore, no_day, no_quantity, addv.get(idx).getName());
+                    System.out.println(slot.getHosID()+"**");
+                    asslot.add(slot);
+                    //System.out.println(asslot.size()+"*");
+                    System.out.println("Slot added by Hospital " + str + " for Day: " + no_day + ", Available Quantity: " + no_quantity + " of Vaccine " + addv.get(idx).getName());
+                    //doubt!
+                }
+            } else if (n == 5) {
+                System.out.println("Enter your Unique ID:");
+                String str = sc.next();
+                System.out.println("""
+                        1. Search by area
+                        2. Search by Vaccine
+                        3. Exit""");
+                System.out.println("Enter option");
+                int num = sc.nextInt();
+                if (num == 1) {
+                    System.out.println("Enter PinCode");
+                    int pin = sc.nextInt();
+                    Iterator it = map_pin_name.entrySet().iterator();
+                    while (it.hasNext()) {
+                        Map.Entry map = (Map.Entry) it.next();
+                        reghos h = ((reghos) map.getValue());
+                        if (h.getPin() == pin) {
+                            System.out.println(map.getKey() + " " + h.getName());
+                        }
+                    }
+                    System.out.println("Enter hospital ID:");
+                    String choosenId = sc.next();
+                    //Iterator itaslot = asslot.iterator();int pc = 0;
+
+                    for (int i = 0; i < asslot.size();i++) {
+                        if (asslot.get(i).getHosID().equals(choosenId)) {
+                            System.out.print(i + "-> Day:" + asslot.get(i).getDaynumber() + " Available Qty:" + asslot.get(i).getEnterQuatity() + " Vaccine:" + asslot.get(i).getCvorcd() + "\n");
+                        }
+                    }
+//                    while (itaslot.hasNext()){
+//                        addslot a = ((addslot)itaslot.next());
+//                        if(a.hosID.equals(choosenId)){
+//                            System.out.print(pc+"-> Day:"+a.daynumber+" Available Qty:"+a.EnterQuatity+" Vaccine:"+a.cvorcd+"\n");
+//                        }
+//                        pc++;
+//                    }
+                    System.out.println("Choose slot:");
+                    int tochoose = sc.nextInt();
+                    int y = 0;
+                    for (int i = 0; i < aregcity.size(); i++) {
+                        if (str.equals(aregcity.get(i).getUniqueID()) && !aregcity.get(i).getCurrentstatus().equals("FULLY VACCINATED") && aregcity.get(i).getDuedateford()<=asslot.get(tochoose).getDaynumber()) {
+                            y = 1;
+                            System.out.println(aregcity.get(i).getName() + " Vaccinated with " + asslot.get(tochoose).getCvorcd());//bacha hai yeh!!!
+                            int x = 0;
+                            int z = 0;
+                            //int z = asslot.get(i).getEnterQuatity();
+                            for(int j = 0;j<addv.size();j++){
+                                if(addv.get(j).getName().equals(asslot.get(tochoose).getCvorcd())){
+                                    x = addv.get(j).getGap();
+                                    z = addv.get(j).getDose();
+                                }
+                            }//todo
+                            //System.out.println(x);
+                            asslot.get(tochoose).decremental();
+                            aregcity.get(i).udstatus(x,asslot.get(tochoose).getCvorcd(),z);
+                        }
+                    }
+                    if(y==0){
+                        System.out.println("No slot available! {before due date}");
+                    }
+//                    if(bookslot.map_pin_name.containsKey(pin)){
+//                        System.out.println(bookslot.map_name_ID.get(bookslot.map_pin_name.get(pin))+" "+bookslot.map_pin_name.get(pin));
+//                    }
+                } else if (num == 2) {
+                    System.out.println("Enter Vaccine name:");
+                    String choosenvaccine = sc.next();
+                    for(int i = 0;i<asslot.size();i++){
+                        if(asslot.get(i).getCvorcd().equals(choosenvaccine)){
+                            for (int j = 0;j<ahos.size();j++){
+                                if(ahos.get(j).getHospiatalid().equals(asslot.get(i).getHosID())){
+                                    System.out.println(asslot.get(i).getHosID()+" "+ahos.get(j).getName());
+                                }
+                            }
+                        }
+                    }
+                    System.out.println("Enter hospital ID:");
+                    String choosenId = sc.next();
+                    //Iterator itaslot = asslot.iterator();int pc = 0;
+                    for (int i = 0; i < asslot.size(); i++) {
+                        if (asslot.get(i).getHosID().equals(choosenId) && asslot.get(i).getCvorcd().equals(choosenvaccine)) {
+                            System.out.print(i + "-> Day:" + asslot.get(i).getDaynumber() + " Available Qty:" + asslot.get(i).getEnterQuatity() + " Vaccine:" + asslot.get(i).getCvorcd() + "\n");
+                        }
+                    }
+//                    while (itaslot.hasNext()){
+//                        addslot a = ((addslot)itaslot.next());
+//                        if(a.getHosID().equals(choosenId)){
+//                            System.out.print(pc+"-> Day:"+a.getDaynumber()+" Available Qty:"+a.getEnterQuatity()+" Vaccine:"+a.getCvorcd()+"\n");
+//                        }
+//                        pc++;
+//                    }
+                    System.out.println("Choose slot:");
+                    int tochoose = sc.nextInt();
+                    int y = 0;
+                    for (int i = 0; i < aregcity.size(); i++) {
+                        if (str.equals(aregcity.get(i).getUniqueID()) && !aregcity.get(i).getCurrentstatus().equals("FULLY VACCINATED") && aregcity.get(i).getDuedateford()<=asslot.get(tochoose).getDaynumber()) {
+                            if(aregcity.get(i).getVaccinef()!=null && aregcity.get(i).getVaccinef().equals(asslot.get(tochoose).getCvorcd())){
+                                y = 1;
+                                System.out.println(aregcity.get(i).getName() + " Vaccinated with " + asslot.get(tochoose).getCvorcd());//bacha hai yeh!!!
+                                int x = 0;
+                                int z = 0;
+                                for(int ii = 0;ii<addv.size();ii++){
+                                    if(addv.get(ii).getName().equals(asslot.get(tochoose).getCvorcd())){
+                                        x = addv.get(ii).getGap();
+                                        z = addv.get(ii).getDose();
+                                    }
+                                }//todo
+                                asslot.get(tochoose).decremental();
+                                aregcity.get(i).udstatus(x,asslot.get(tochoose).getCvorcd(),z);
+                            }
+                            if(aregcity.get(i).getVaccinef()==null) {
+
+
+                                y = 1;
+                                System.out.println(aregcity.get(i).getName() + " Vaccinated with " + asslot.get(tochoose).getCvorcd());//bacha hai yeh!!!
+                                int x = 0;
+                                int z = 0;
+                                for (int ii = 0; ii < addv.size(); ii++) {
+                                    if (addv.get(ii).getName().equals(asslot.get(tochoose).getCvorcd())) {
+                                        x = addv.get(ii).getGap();
+                                        z = addv.get(ii).getDose();
+                                    }
+                                }
+                                //todo
+                                asslot.get(tochoose).decremental();
+                                aregcity.get(i).udstatus(x, asslot.get(tochoose).getCvorcd(), z);
+                            }
+                        }
+                    }
+                    if(y==0){
+                        System.out.println("No slot available! {before due date!}");
+                    }
+//                    if(bookslot.map_pin_name.containsKey(pin)){
+//                        System.out.println(bookslot.map_name_ID.get(bookslot.map_pin_name.get(pin))+" "+bookslot.map_pin_name.get(pin));
+//                    }
+
+//                    for(int i = 0;i<addv.size();i++){
+//                        if(addv.get(i).getName().equals(asslot.get(tochoose).getCvorcd())){
+//                            x = addv.get(i).getGap();
+//                        }
+//                    }//todo
+//                    asslot.get(tochoose).decremental();
+//                    aregcity.get(y).udstatus(x,asslot.get(tochoose).getCvorcd());
+//
+                }
+                else if(num==3){
+                    System.out.println("try again!");
+                }
+            }
+                else if (n == 6) {
+                    System.out.println("Enter Hospital id:");
+                    String str = sc.next();
+                    for (int i = 0; i < asslot.size(); i++) {
+                        if (asslot.get(i).getHosID().equals(str)) {
+//                        int x = asslot.get(i).slots;
+//                        for(int j = 1;j<=x;j++){
+                            System.out.println("Day: " + asslot.get(i).getDaynumber() + " Vaccine: " + asslot.get(i).getCvorcd() + " Available Qty: " + asslot.get(i).getEnterQuatity());
+//                        }
+                        }
+                    }
+                } else if (n == 7) {
+                        System.out.println("Enter patient ID:");
+                        String  str = sc.next();
+                        for(int i = 0;i<aregcity.size();i++){
+                            if(aregcity.get(i).getUniqueID().equals(str)){
+                                System.out.println(aregcity.get(i).getCurrentstatus());
+                                if(!aregcity.get(i).getCurrentstatus().equals("Citizen REGISTERED")){
+                                    System.out.println(aregcity.get(i).getVaccinef());
+                                    System.out.println(aregcity.get(i).getNo_doses());
+                                    if(!aregcity.get(i).getCurrentstatus().equals("FULLY VACCINATED")){
+                                        System.out.println(aregcity.get(i).getDuedateford());
+                                    }
+                                }
+                            }
+                        }
+                } else if (n == 8) {
+                    break;
+                }
+                System.out.println();
+                System.out.println("-".repeat(30));
+                System.out.println();
+                System.out.println("{Menu Options}");
+            }
+        }
+    }
+//array regcit
+//array of vaccine
+//
