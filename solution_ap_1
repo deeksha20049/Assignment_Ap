@@ -276,18 +276,23 @@ public class Ap_Assignment1 {
                 if (uid.length() != 12) {
                     System.out.println("Invalid UniqueId!");
                 }
+                boolean flag = false;
                 for(int i  = 0;i<aregcity.size();i++){
-                    if(!aregcity.get(i).getUniqueID().equals(uid)){
-
+                    if(aregcity.get(i).getUniqueID().equals(uid)){
+                        flag = true;
                     }
                 }
-                Regcitizen rc = new Regcitizen(str, age, uid);
-                System.out.println("Citizen Name: " + rc.getName() + ", Age: " + rc.getAge() + ", Unique ID: " + rc.getUniqueID());
-                if (age < 18) {
-                    System.out.println("Only above 18 are allowed");
-                } else {
+                if(!flag && age>=18){
+                    Regcitizen rc = new Regcitizen(str, age, uid);
+                    System.out.println("Citizen Name: " + rc.getName() + ", Age: " + rc.getAge() + ", Unique ID: " + rc.getUniqueID());
                     aregcity.add(rc);
                 }
+                if (age < 18) {
+                    System.out.println("Only above 18 are allowed");
+                }
+//                else {
+//                    aregcity.add(rc);
+//                }
             } else if (n == 4) {
                 System.out.println("Enter Hospital ID:");
                 String str = sc.next();
@@ -308,7 +313,7 @@ public class Ap_Assignment1 {
                     }
                     int idx = sc.nextInt();
                     addslot slot = new addslot(str, daystore, no_day, no_quantity, addv.get(idx).getName());
-                    System.out.println(slot.getHosID()+"**");
+                    //System.out.println(slot.getHosID()+"**");
                     asslot.add(slot);
                     //System.out.println(asslot.size()+"*");
                     System.out.println("Slot added by Hospital " + str + " for Day: " + no_day + ", Available Quantity: " + no_quantity + " of Vaccine " + addv.get(idx).getName());
